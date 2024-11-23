@@ -26,11 +26,9 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 script {
-                   withCredentials([sshUserPrivateKey(credentialsId: 'ec2-user', keyFileVariable: 'PRIVATE_KEY_PATH', usernameVariable: 'SSH_USER')]) {
-                       sh 'ssh -i "$PRIVATE_KEY_PATH" $SSH_USER@ec2-52-73-65-200.compute-1.amazonaws.com'
+                       sh 'ssh  ec2-user@ec2-52-73-65-200.compute-1.amazonaws.com'
                        sh 'docker pull docker.io/ahmedmaher07/task:v0'
                        sh 'docker run -d docker.io/ahmedmaher07/task:v0'
-                    }
                 }
             }
         }
