@@ -33,11 +33,11 @@ pipeline {
                 }
             }
         }
-        stage('Install Docker to EC2') {
+        stage('Run myscript.sh') {
             steps {
                 script {
                     sh 'chmod +x myscript.sh'
-                    sh './var/jenkins_home/workspace/task@tmp/myscript.sh'
+                    sh './myscript.sh'
                 }
             }
         }
