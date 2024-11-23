@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     sh 'chmod +x myscript.sh'
-                    sh './myscript.sh'
+                    sh './main/myscript.sh'
                 }
             }
         }
