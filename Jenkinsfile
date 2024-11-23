@@ -36,8 +36,9 @@ pipeline {
         stage('Run myscript.sh') {
             steps {
                 script {
-                    sh 'chmod +x myscript.sh'
-                    sh './myscript.sh'
+                    // Assuming the 'hello.sh' script is in the root of the repository
+                    sh 'chmod +x myscript.sh'  // Make the script executable (if not already)
+                    sh './myscript.sh'  
                 }
             }
         }
