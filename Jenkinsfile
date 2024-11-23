@@ -3,8 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {  
-                git branch: 'main', url: 'https://github.com/wolf8534/task.git'
-                git branch: 'main', url: 'https://github.com/wolf8534/task/blob/main/myscript.sh'
+               git url: 'https://github.com/wolf8534/task.git', branch: 'main' 
                 
             }
         }
