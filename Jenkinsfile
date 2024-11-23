@@ -27,7 +27,7 @@ pipeline {
             steps {
                 script {
                     
-                    sh 'chmod 400 NTI.pem'
+                    sh 'chmod 400 /var/jenkins_home/NTI.pem'
                     sh 'ssh -i "/var/jenkins_home/NTI.pem" ec2-user@ec2-52-73-65-200.compute-1.amazonaws.com'
                 }
             }
