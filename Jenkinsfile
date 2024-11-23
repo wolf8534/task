@@ -29,7 +29,7 @@ pipeline {
                        sh 'chmod 400 NTI.pem'
                        sh 'ssh -i "NTI.pem"  ec2-user@ec2-52-73-65-200.compute-1.amazonaws.com'
                        sh 'docker pull docker.io/ahmedmaher07/task:v0'
-                       sh 'docker run -d docker.io/ahmedmaher07/task:v0'
+                       sh 'docker run -d --name ahmed -p 3000:3000 docker.io/ahmedmaher07/task:v0'
                 }
             }
         }
