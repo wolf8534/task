@@ -26,6 +26,7 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 script {
+                    sh 'ssh-keyscan -H ec2-52-73-65-200.compute-1.amazonaws.com >> /root/.ssh/known_hosts'
                     sh 'chmod 400 NTI.pem'
                     sh 'ssh -i "NTI.pem" ec2-user@ec2-52-73-65-200.compute-1.amazonaws.com'
                 }
