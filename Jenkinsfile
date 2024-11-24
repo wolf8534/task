@@ -28,30 +28,17 @@ pipeline {
                 script {
                     sh 'chmod 400 NTI.pem'
                     sh 'ssh -o StrictHostKeyChecking=no -i "NTI.pem" ec2-user@ec2-52-73-65-200.compute-1.amazonaws.com'
+                    sh 'scp /myscript.sh ec2-user@ec2-52-73-65-200.compute-1.amazonaws.com:/home/ec2-user/'
                 }
             }
         }
-        stage('install Docker') {
+        stage('Run myscript') {
             steps {
                 script {
+                    sh 'chmod +x myscript.sh'
+                    sh './myscript.sh'
                     
-                  sudo yum update -y
-                            
-                            # تثبيت الحزم المطلوبة
-                            sudo yum install -y yum-utils device-mapper-persistent-data lvm2
-                            
-                            # إضافة مستودع Docker
-                            sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-                            
-                            # تثبيت Docker
-                            sudo yum install -y docker-ce docker-ce-cli containerd.io
-                            
-                            # بدء خدمة Docker
-                            sudo systemctl start docker
-                            sudo systemctl enable docker
-                            
-                            # إضافة المستخدم إلى مجموعة Docker لتشغيل الأوامر بدون sudo
-                            sudo usermod -aG docker ec2-user 
+                 
                 }
             }
         }
