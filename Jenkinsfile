@@ -36,14 +36,14 @@ pipeline {
         stage('install Docker') {
             steps {
                 script {
-                    sh 'yum update -y'
-                    sh 'sudo yum install -y yum-utils'
-                    sh 'sudo yum install -y yum-utils'
-                    sh 'sudo amazon-linux-extras enable docker'
-                    sh 'sudo yum install -y docker'
-                    sh 'sudo service docker start'
-                    sh 'sudo systemctl enable docker'
-                    sh 'sudo usermod -aG docker ec2-user'  
+                    sh 'dnf update -y'
+                    sh 'dnf install -y yum-utils'
+                    sh 'dnf install -y yum-utils'
+                    sh 'amazon-linux-extras enable docker'
+                    sh 'dnf install -y docker'
+                    sh 'service docker start'
+                    sh 'systemctl enable docker'
+                    sh 'usermod -aG docker ec2-user'  
                 }
             }
         }
