@@ -36,17 +36,14 @@ pipeline {
         stage('install Docker') {
             steps {
                 script {
-                    sh 'sudo apt-get update'
-                    sh 'sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common'
-                    sh 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -'
-                    sh 'sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"'
-                    sh 'sudo apt-get update'
-                    sh 'sudo apt-get install -y docker-ce'
-                    sh 'sudo docker --version'
-                    sh 'sudo usermod -aG docker $USER'
+                    sh 'yum update -y'
+                    sh 'sudo yum install -y yum-utils'
+                    sh 'sudo yum install -y yum-utils'
+                    sh 'sudo amazon-linux-extras enable docker'
+                    sh 'sudo yum install -y docker'
+                    sh 'sudo service docker start'
                     sh 'sudo systemctl enable docker'
-                    sh 'sudo systemctl start docker'
-                    sh 'sudo systemctl status docker'  
+                    sh 'sudo usermod -aG docker ec2-user'  
                 }
             }
         }
