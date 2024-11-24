@@ -4,7 +4,6 @@ pipeline {
         stage('Checkout') {
             steps {  
                git url: 'https://github.com/wolf8534/task.git', branch: 'main' 
-                
             }
         }
         stage('Build Docker Image') {
@@ -27,7 +26,6 @@ pipeline {
         stage('connect to EC2') {
             steps {
                 script {
-                    
                     sh 'chmod 400 NTI.pem'
                     sh 'ssh -o StrictHostKeyChecking=no -i "NTI.pem" ec2-user@ec2-52-73-65-200.compute-1.amazonaws.com'
                 }
@@ -36,14 +34,13 @@ pipeline {
         stage('install Docker') {
             steps {
                 script {
-                    sh 'sudo apt-get update'
-                    sh 'dnf install -y yum-utils'
-                    sh 'dnf install -y yum-utils'
-                    sh 'amazon-linux-extras enable docker'
-                    sh 'dnf install -y docker'
-                    sh 'service docker start'
-                    sh 'systemctl enable docker'
-                    sh 'usermod -aG docker ec2-user'  
+                    
+                    sh 'sudo dnf update -y'
+                    sh 'sudo amazon-linux-extras enable docker'
+                    sh 'sudo dnf install -y docker'
+                    sh 'sudo systemctl start docker'
+                    sh 'sudo systemctl enable docker'
+                    sh 'sudo usermod -aG docker ec2-user'  
                 }
             }
         }
