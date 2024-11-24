@@ -35,7 +35,7 @@ pipeline {
         stage('Run myscript') {
             steps {
                 script {
-                    sh 'chmod +x /home/ec2-user/myscript.sh'
+                    
                     sh '/home/ec2-user/myscript.sh'
                     
                  
