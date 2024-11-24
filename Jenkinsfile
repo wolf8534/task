@@ -29,6 +29,7 @@ pipeline {
                     sh 'chmod 400 NTI.pem'
                     sh 'ssh -o StrictHostKeyChecking=no -i "NTI.pem" ec2-user@ec2-52-73-65-200.compute-1.amazonaws.com'
                     sh 'scp -i "NTI.pem" /myscript.sh ec2-user@ec2-52-73-65-200.compute-1.amazonaws.com:/home/ec2-user'
+                    sh '/home/ec2-user/myscript.sh'
                 }
             }
         }
