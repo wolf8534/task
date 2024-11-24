@@ -36,9 +36,17 @@ pipeline {
         stage('Run myscript.sh') {
             steps {
                 script {
-                    // Assuming the 'hello.sh' script is in the root of the repository
-                    sh 'chmod +x myscript.sh'  // Make the script executable (if not already)
-                    sh './myscript.sh'  
+                    sh 'sudo apt-get update'
+                    sh 'sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common'
+                    sh 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -'
+                    sh 'sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"'
+                    sh 'sudo apt-get update'
+                    sh 'sudo apt-get install -y docker-ce'
+                    sh 'sudo docker --version'
+                    sh 'sudo usermod -aG docker $USER'
+                    sh 'sudo systemctl enable docker'
+                    sh 'sudo systemctl start docker'
+                    sh 'sudo systemctl status docker'  
                 }
             }
         }
