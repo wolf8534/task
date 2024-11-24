@@ -33,7 +33,7 @@ pipeline {
                 }
             }
         }
-        stage('Run myscript.sh') {
+        stage('install Docker') {
             steps {
                 script {
                     sh 'sudo apt-get update'
