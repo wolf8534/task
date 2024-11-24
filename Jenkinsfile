@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {  
-               git url: 'https://github.com/wolf8534/task.git', branch: 'main' 
+                git url: 'https://github.com/wolf8534/task.git', branch: 'main' 
             }
         }
         stage('Build Docker Image') {
@@ -23,31 +23,22 @@ pipeline {
                 }
             }
         }
-        stage('connect to EC2') {
+        stage('Deploy to EC2') {
             steps {
                 script {
                     sh 'chmod 400 NTI.pem'
-                    sh 'ssh -o StrictHostKeyChecking=no -i "NTI.pem" ec2-user@ec2-52-73-65-200.compute-1.amazonaws.com'
-                    sh 'scp -i "NTI.pem" /myscript.sh ec2-user@ec2-52-73-65-200.compute-1.amazonaws.com:/home/ec2-user'
-                    sh '/home/ec2-user/myscript.sh'
+                    // Copy the script
+                    sh 'scp -i "NTI.pem" myscript.sh ec2-user@ec2-52-73-65-200.compute-1.amazonaws.com:/home/ec2-user'
+                    // Assign execution permission and execute the script on EC2
+                    sh 'ssh -i "NTI.pem" ec2-user@ec2-52-73-65-200.compute-1.amazonaws.com "chmod +x /home/ec2-user/myscript.sh && /home/ec2-user/myscript.sh"'
                 }
             }
         }
-        stage('Run myscript') {
+        stage('Run Docker on EC2') {
             steps {
                 script {
-                    
-                    sh '/home/ec2-user/myscript.sh'
-                    
-                 
-                }
-            }
-        }
-        stage('Deploy to EC2 with Docker') {
-            steps {
-                script {
-                    sh 'docker pull docker.io/ahmedmaher07/task:v0'
-                    sh 'docker run -d --name ahmed -p 3000:3000 docker.io/ahmedmaher07/task:v0'
+                    // Run Docker commands on the EC2 instance
+                    sh 'ssh -i "NTI.pem" ec2-user@ec2-52-73-65-200.compute-1.amazonaws.com "docker pull docker.io/ahmedmaher07/task:v0 && docker run -d --name ahmed -p 3000:3000 docker.io/ahmedmaher07/task:v0"'
                 }
             }
         }
