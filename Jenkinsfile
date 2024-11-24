@@ -35,15 +35,23 @@ pipeline {
             steps {
                 script {
                     
-                    sh 'sudo apt-get update'
-                    sh 'sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common'
-                    sh 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -'
-                    sh 'sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"'
-                    sh 'sudo apt-get update'
-                    sh 'sudo apt-get install -y docker-ce'
-                    sh 'sudo systemctl start docker'
-                    sh 'sudo systemctl enable docker'
-                    sh 'sudo usermod -aG docker jenkins' 
+                  sudo yum update -y
+                            
+                            # تثبيت الحزم المطلوبة
+                            sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+                            
+                            # إضافة مستودع Docker
+                            sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+                            
+                            # تثبيت Docker
+                            sudo yum install -y docker-ce docker-ce-cli containerd.io
+                            
+                            # بدء خدمة Docker
+                            sudo systemctl start docker
+                            sudo systemctl enable docker
+                            
+                            # إضافة المستخدم إلى مجموعة Docker لتشغيل الأوامر بدون sudo
+                            sudo usermod -aG docker ec2-user 
                 }
             }
         }
