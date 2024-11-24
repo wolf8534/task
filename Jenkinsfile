@@ -36,7 +36,7 @@ pipeline {
         stage('install Docker') {
             steps {
                 script {
-                    sh 'dnf update -y'
+                    sh 'apt-get update'
                     sh 'dnf install -y yum-utils'
                     sh 'dnf install -y yum-utils'
                     sh 'amazon-linux-extras enable docker'
